@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
-import { getCategoriesAndDocuments } from "../utils/firebase/firebase.js";
-// import SHOP_DATA from "../utils/shop-data.js";
+import { gql, useQuery } from "@apollo/client";
 
 const CategoriesContext = React.createContext();
 
+//query to get collections
+const COLLECTIONS = gql`
+	query GetCollections {
+		collections {
+			id
+			title
+			items {
+				id
+				name
+				price
+				imageUrl
+			}
+		}
+	}
+`;
+
 export const CategoriesProvider = ({ children }) => {
+	const { loading, error, data } = useQuery(COLLECTIONS);
 	const [categories, setCategories] = useState({});
 
-	useEffect(() => {
-		//get categories from db, since it async wrap it in internal function
-		const getCategoriesMap = async () => {
-			const categoryMap = await getCategoriesAndDocuments();
-			console.log(categoryMap);
-			setCategories(categoryMap);
-		};
-		//then call it
-		getCategoriesMap();
-	}, []);
+	console.log(data);
 	return (
 		<CategoriesContext.Provider
 			value={{

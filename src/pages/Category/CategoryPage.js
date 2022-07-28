@@ -13,7 +13,6 @@ const CategoryPage = () => {
 	useEffect(() => {
 		//set products array to appropriate category array name
 		setProducts(categories[categoryName]);
-		console.log(categoryName);
 	}, [categoryName, categories]);
 	return (
 		<Wrapper>
