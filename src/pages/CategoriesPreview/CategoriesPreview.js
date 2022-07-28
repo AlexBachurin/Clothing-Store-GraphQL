@@ -10,14 +10,9 @@ const CategoriesPreview = () => {
 			{
 				// use object keys to get the title from categories object
 				//and pass to CategoryPreview component title and associated products with this title
-				Object.keys(categories).map((title) => {
-					return (
-						<CategoryPreview
-							key={title}
-							title={title}
-							products={categories[title]}
-						/>
-					);
+				categories.map((item) => {
+					const { title, items } = item;
+					return <CategoryPreview key={title} title={title} products={items} />;
 				})
 			}
 		</Wrapper>

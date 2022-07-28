@@ -20,15 +20,24 @@ const COLLECTIONS = gql`
 `;
 
 export const CategoriesProvider = ({ children }) => {
-	const { loading, error, data } = useQuery(COLLECTIONS);
-	const [categories, setCategories] = useState({});
+	//execute our query
 
-	console.log(data);
+	const [categories, setCategories] = useState([]);
+	const { loading, error, data } = useQuery(COLLECTIONS);
+
+	useEffect(() => {
+		console.log(data);
+		if (data) {
+			const { collections } = data;
+			setCategories(collections);
+		}
+	}, [data]);
 	return (
 		<CategoriesContext.Provider
 			value={{
 				categories,
 				setCategories,
+				loading,
 			}}
 		>
 			{children}

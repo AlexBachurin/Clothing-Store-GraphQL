@@ -11,8 +11,12 @@ const CategoryPage = () => {
 	const [products, setProducts] = useState([]);
 	//every time categoryName or categories from db changes call useEffect to rerender page
 	useEffect(() => {
-		//set products array to appropriate category array name
-		setProducts(categories[categoryName]);
+		//first find in categories array item with matching category name
+		const filteredArr = categories.filter((item) => {
+			return item.title.toLowerCase() === categoryName.toLowerCase();
+		});
+		//then set items of found matching categories items to products
+		setProducts(filteredArr[0].items);
 	}, [categoryName, categories]);
 	return (
 		<Wrapper>
